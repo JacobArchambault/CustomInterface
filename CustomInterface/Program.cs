@@ -12,29 +12,20 @@ namespace CustomInterface
         {
 
             Console.WriteLine("***** Fun with Interfaces *****\n");
-            /// Call Points property defined by IPointy.
-            Hexagon hex = new Hexagon();
-            Console.WriteLine("Points: {0}", hex.Points);
 
-            // Catch a possible InvalidCastException
-            Circle c = new Circle("Lisa");
-            IPointy itfPt = null;
-            try
-            {
-                itfPt = (IPointy)c;
-                Console.WriteLine(itfPt.Points);
-            }
-            catch (InvalidCastException e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            // Make an array of Shapes.
+            Shape[] myShapes = { new Hexagon(), new Circle(), new Triangle("Joe"), new Circle("JoJo") };
 
-            Hexagon hex2 = new Hexagon("Peter");
-            IPointy itfPt2 = hex2 as IPointy;
-            if (itfPt2 != null)
-                Console.WriteLine("Points: {0}", itfPt2.Points);
-            else
-                Console.WriteLine("OOPS! Not pointy...");
+            for (int i = 0; i < myShapes.Length; i++)
+            {
+                myShapes[i].Draw();
+
+                if (myShapes[i] is IPointy ip)
+                    Console.WriteLine("-> Points: {0}", ip.Points);
+                else
+                    Console.WriteLine("-> {0}\'s not pointy!", myShapes[i].PetName);
+                Console.WriteLine();
+            }
             Console.ReadLine();
         }
     }
